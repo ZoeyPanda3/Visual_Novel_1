@@ -1,13 +1,8 @@
 ﻿# game/script.rpy
-# --------------------------------
-# Canonical entrypoint. Shows the black-screen opening lines,
-# then continues into the prologue flow.
+# Entry point. Keep this as the ONLY file that defines `label start:`.
 
 label start:
-    jump opening_titles
-
-
-# If you ever need a quick test entry, you can comment the line above
-# and jump directly to specific labels like:
-#     jump prologue_intro
-#     jump chapter_1_start
+    if not getattr(persistent, "did_customize", False):
+        jump character_customization
+    else:
+        jump prologue_intro

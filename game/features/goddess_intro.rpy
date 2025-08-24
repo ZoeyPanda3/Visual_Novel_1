@@ -1,33 +1,40 @@
-# game/features/goddess_intro.rpy
-# --------------------------------
-# Prologue intro and initial back-and-forth with Nyxara
+# game/goddess_intro.rpy
+# Canonical prologue owner. Ensure no other file defines `label prologue_intro`.
 
 label prologue_intro:
-    scene bg_cosmos_void with fade_long
-    show nyxara_silhouette at truecenter with fade_mid
 
-    # Opening lines (regal, alluring, cryptic)
-    nyx "A lone soul drifts into my dominion... how curious."
-    nyx "Few dare the embrace of shadow, and yet—here you are: unbidden, unveiled."
-    nyx "Shall I weave you into my lies... or will you prove bold enough to seek the truth I conceal?"
+    # Try a looping cosmic video; otherwise use a still; otherwise fade to black.
+    $ cosmos_video = "videos/cosmos.webm"
+    $ cosmos_still = "images/cosmos_bg.png"
 
-    # Short back-and-forth
-    $ _line = inner_voice("Where am I... and who is she?")
-    n "[_line]"
-    nyx "Names, places... such fragile anchors. You stand between what is spoken and what is hidden."
-    nyx "Answer, little spark: do you wish to be... or merely seem?"
+    if renpy.exports.loadable(cosmos_video):
+        call start_video_bg(path=cosmos_video)
+    elif renpy.exports.loadable(cosmos_still):
+        scene expression cosmos_still
+    else:
+        scene black
 
-    # Keep menu labels strictly ASCII to avoid parser issues.
+    with fade
+
+    # Optional concealed sprite if present.
+    $ goddess_silhouette = "images/goddess_mystery.png"
+    if renpy.exports.loadable(goddess_silhouette):
+        show expression goddess_silhouette at truecenter
+
+    # Opening lines
+    g "You do not belong here… and yet, here you stand."
+    g "A fragile soul, trembling on the edge of truth and shadow."
+    g "Tell me… will you be my lie, or will you chase your own truth?"
+
     menu:
-        "I want the truth, even if it burns":
-            nyx "Courage tastes sweet on mortal tongues. Very well. We shall begin."
-        "If seeming keeps me alive, I'll wear any mask":
-            nyx "Pragmatism. A serviceable lie. You may yet amuse me."
-        "I don't owe you answers":
-            nyx "Defiance, here? How quaint. Keep it—if you can."
+        "Yield to the voice":
+            g "Wise. Even lies, in the right hands, can be a path."
+        "Resist the pull":
+            g "Defiance. How bright your spark burns—for now."
 
-    nyx "Before I cast you into the waking tapestry, choose the shape of your mask. Flesh must be named. Desire must be tinted. Lies must be fitted."
-    hide nyxara_silhouette with fade_short
+    call stop_video_bg
 
-    # Hand off to customization flow.
-    jump customization_entry
+    if renpy.has_label("chapter_1"):
+        jump chapter_1
+    else:
+        return
