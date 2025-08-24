@@ -1,14 +1,13 @@
-# game/customization_flow.rpy
-# Logic wrapper around the customization screen. Keeps the screen lean.
+# game/features/customization_flow.rpy
+# -------------------------------------------------------------------
+# Simple flow that opens the character creator and continues based on result.
 
-label character_customization:
+label customization_flow:
     $ result = renpy.call_screen("character_creator")
-
     if result:
-        $ persistent.did_customize = True
-        $ renpy.save_persistent()
-        "You are [player_name], a [player_sex] [player_class]."
-        jump prologue_intro
+        # Selections confirmed; continue your story entry point here.
+        # Example: jump chapter_1
+        return
     else:
-        "You hesitate, and the darkness presses in..."
+        # Player cancelled; safely return to caller (or reopen screen).
         return

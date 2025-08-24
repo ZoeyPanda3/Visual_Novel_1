@@ -1,11 +1,8 @@
 # game/characters.rpy
-# Character() definitions live here so they aren’t duplicated elsewhere.
+# -------------------
+# Sprite/image definitions for the goddess's shadow form. 
 
-define p = Character("[player_name]", dynamic=True)
-
-define g = Character(
-    "Goddess",
-    who_color = "#D8C7FF",
-    what_prefix = "“",
-    what_suffix = "”"
-)
+# === GODDESS SHADOW SPRITE =================================================
+# TODO: Place your silhouette sprite at: game/images/goddess_shadow.png
+# If your filename/path differs, update below.
+image nyxara shadow = "images/goddess_shadow.png"
